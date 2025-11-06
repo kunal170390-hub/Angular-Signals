@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpService } from '../../wrapper/http.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-user-list',
@@ -12,12 +12,11 @@ import { HttpService } from '../../wrapper/http.service';
 export class UserListComponent implements OnInit {
   users: any[] = [];
 
-  constructor(private http: HttpService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.http.get<any[]>('/users').subscribe({
-      next: (data) => (this.users = data),
-      error: (err) => console.error('Error fetching users', err),
-    });
+    this.userService.getUsers().subscribe(resp => {
+        console.log("users >>>>>>> ", resp);
+    })
   }
 }
